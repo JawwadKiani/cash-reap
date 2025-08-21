@@ -1,0 +1,376 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashBack Finder - Best Credit Card for Your Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1976D2',
+                        secondary: '#388E3C',
+                        accent: '#FF6F00',
+                        surface: '#F5F5F5',
+                        'surface-variant': '#E0E0E0',
+                        'on-surface': '#212121',
+                        'on-surface-variant': '#757575',
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="font-inter bg-surface min-h-screen">
+    <!-- @COMPONENT: Header [location, search, filters] -->
+    <header class="bg-white shadow-sm border-b border-surface-variant sticky top-0 z-50">
+        <div class="max-w-md mx-auto px-4 py-3">
+            <div class="flex items-center justify-between mb-3">
+                <h1 class="text-xl font-bold text-on-surface">CashBack Finder</h1>
+                <button data-event="click:toggleFilters" class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
+            </div>
+            
+            <!-- Location Detection -->
+            <div class="space-y-3">
+                <div class="flex items-center gap-2 p-3 bg-primary/5 rounded-lg border border-primary/20">
+                    <i class="fas fa-location-dot text-primary"></i>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-on-surface" data-bind="currentLocation.name">Target - Downtown Seattle</p>
+                        <p class="text-xs text-on-surface-variant" data-bind="currentLocation.address">1234 Pine St, Seattle, WA</p>
+                    </div>
+                    <button data-event="click:detectLocation" class="text-primary hover:text-primary/80 transition-colors">
+                        <i class="fas fa-crosshairs text-sm"></i>
+                    </button>
+                </div>
+                
+                <!-- Manual Search -->
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        placeholder="Search for a store..." 
+                        class="w-full p-3 pr-10 border border-surface-variant rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        data-event="input:handleStoreSearch"
+                    >
+                    <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-on-surface-variant"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- @END_COMPONENT: Header -->
+
+    <!-- @COMPONENT: FilterPanel [conditional display] -->
+    <div class="hidden max-w-md mx-auto px-4 py-3 bg-white border-b border-surface-variant" data-component="FilterPanel">
+        <div class="grid grid-cols-2 gap-3">
+            <select class="p-2 border border-surface-variant rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                <option>Any Annual Fee</option>
+                <option>No Annual Fee</option>
+                <option>Under $100</option>
+            </select>
+            <select class="p-2 border border-surface-variant rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                <option>Any Credit Score</option>
+                <option>Excellent (750+)</option>
+                <option>Good (700-749)</option>
+                <option>Fair (650-699)</option>
+            </select>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: FilterPanel -->
+
+    <main class="max-w-md mx-auto px-4 py-4 space-y-4">
+        <!-- @COMPONENT: StoreInfo [current store category and info] -->
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-surface-variant">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-store text-red-600 text-lg"></i>
+                </div>
+                <div>
+                    <h2 class="font-semibold text-on-surface" data-bind="store.name">Target</h2>
+                    <p class="text-sm text-on-surface-variant" data-bind="store.category">Department Store</p>
+                </div>
+            </div>
+            <div class="bg-accent/10 rounded-lg p-3">
+                <p class="text-sm text-accent font-medium">💡 Pro Tip: Department stores often have rotating quarterly categories for bonus cash back!</p>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: StoreInfo -->
+
+        <!-- @COMPONENT: TopRecommendation [best card highlight] -->
+        <div class="bg-gradient-to-r from-secondary to-secondary/90 rounded-xl p-4 text-white shadow-lg">
+            <div class="flex items-center gap-2 mb-2">
+                <i class="fas fa-crown text-yellow-300"></i>
+                <span class="text-sm font-medium opacity-90">BEST MATCH</span>
+            </div>
+            <div class="flex items-center justify-between mb-3">
+                <div>
+                    <h3 class="font-bold text-lg" data-bind="topCard.name">Chase Freedom Flex</h3>
+                    <p class="text-sm opacity-80" data-bind="topCard.issuer">Chase</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-2xl font-bold" data-bind="topCard.cashbackRate">5%</div>
+                    <div class="text-xs opacity-80">Cash Back</div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+                <span data-bind="topCard.categoryMatch">Q4 Department Stores</span>
+                <button data-event="click:viewCardDetails" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-colors">
+                    Details
+                </button>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: TopRecommendation -->
+
+        <!-- @COMPONENT: RecommendationsList [other card options] -->
+        <div class="space-y-3">
+            <h3 class="font-semibold text-on-surface">Other Options</h3>
+            
+            <!-- @MAP: recommendations.map(card => ( -->
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-surface-variant" data-mock="true">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-6 bg-blue-600 rounded flex items-center justify-center">
+                            <span class="text-white text-xs font-bold">AMEX</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-on-surface" data-bind="card.name">Blue Cash Preferred</h4>
+                            <p class="text-xs text-on-surface-variant" data-bind="card.issuer">American Express</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg font-bold text-primary" data-bind="card.cashbackRate">3%</div>
+                        <div class="text-xs text-on-surface-variant">Cash Back</div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-on-surface-variant">Category</span>
+                        <span class="text-on-surface" data-bind="card.category">Department Stores</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-on-surface-variant">Annual Fee</span>
+                        <span class="text-on-surface" data-bind="card.annualFee">$95</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-on-surface-variant">Credit Score</span>
+                        <span class="text-on-surface" data-bind="card.creditScore">700+</span>
+                    </div>
+                </div>
+                <button data-event="click:viewCardDetails" class="w-full mt-3 py-2 text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                    View Details
+                </button>
+            </div>
+
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-surface-variant" data-mock="true">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-6 bg-red-600 rounded flex items-center justify-center">
+                            <span class="text-white text-xs font-bold">CAP1</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-on-surface" data-bind="card.name">Savor Cash Rewards</h4>
+                            <p class="text-xs text-on-surface-variant" data-bind="card.issuer">Capital One</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg font-bold text-primary" data-bind="card.cashbackRate">2%</div>
+                        <div class="text-xs text-on-surface-variant">Cash Back</div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-on-surface-variant">Category</span>
+                        <span class="text-on-surface" data-bind="card.category">General Purchases</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-on-surface-variant">Annual Fee</span>
+                        <span class="text-on-surface" data-bind="card.annualFee">$95</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-on-surface-variant">Credit Score</span>
+                        <span class="text-on-surface" data-bind="card.creditScore">670+</span>
+                    </div>
+                </div>
+                <button data-event="click:viewCardDetails" class="w-full mt-3 py-2 text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                    View Details
+                </button>
+            </div>
+
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-surface-variant" data-mock="true">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-6 bg-orange-600 rounded flex items-center justify-center">
+                            <span class="text-white text-xs font-bold">DISC</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-on-surface" data-bind="card.name">Discover it Cash Back</h4>
+                            <p class="text-xs text-on-surface-variant" data-bind="card.issuer">Discover</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg font-bold text-primary" data-bind="card.cashbackRate">1%</div>
+                        <div class="text-xs text-on-surface-variant">Cash Back</div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-on-surface-variant">Category</span>
+                        <span class="text-on-surface" data-bind="card.category">General Purchases</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-on-surface-variant">Annual Fee</span>
+                        <span class="text-on-surface font-medium text-secondary" data-bind="card.annualFee">$0</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-on-surface-variant">Credit Score</span>
+                        <span class="text-on-surface" data-bind="card.creditScore">650+</span>
+                    </div>
+                </div>
+                <button data-event="click:viewCardDetails" class="w-full mt-3 py-2 text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                    View Details
+                </button>
+            </div>
+            <!-- @END_MAP )) -->
+        </div>
+        <!-- @END_COMPONENT: RecommendationsList -->
+
+        <!-- @COMPONENT: QuickActions [useful actions] -->
+        <div class="space-y-3">
+            <h3 class="font-semibold text-on-surface">Quick Actions</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button data-event="click:compareCards" class="bg-white rounded-xl p-4 shadow-sm border border-surface-variant hover:shadow-md transition-shadow">
+                    <i class="fas fa-balance-scale text-primary text-xl mb-2"></i>
+                    <p class="text-sm font-medium text-on-surface">Compare Cards</p>
+                </button>
+                <button data-event="click:saveRecommendations" class="bg-white rounded-xl p-4 shadow-sm border border-surface-variant hover:shadow-md transition-shadow">
+                    <i class="fas fa-bookmark text-primary text-xl mb-2"></i>
+                    <p class="text-sm font-medium text-on-surface">Save Results</p>
+                </button>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: QuickActions -->
+
+        <!-- @COMPONENT: RecentSearches [user history] -->
+        <div class="space-y-3">
+            <h3 class="font-semibold text-on-surface">Recent Searches</h3>
+            <div class="space-y-2">
+                <!-- @MAP: recentSearches.map(search => ( -->
+                <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm border border-surface-variant" data-mock="true">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-coffee text-on-surface-variant"></i>
+                        <div>
+                            <p class="text-sm font-medium text-on-surface" data-bind="search.storeName">Starbucks</p>
+                            <p class="text-xs text-on-surface-variant" data-bind="search.timestamp">2 hours ago</p>
+                        </div>
+                    </div>
+                    <button data-event="click:loadSearch" class="text-primary hover:text-primary/80 transition-colors">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm border border-surface-variant" data-mock="true">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-gas-pump text-on-surface-variant"></i>
+                        <div>
+                            <p class="text-sm font-medium text-on-surface" data-bind="search.storeName">Shell Gas Station</p>
+                            <p class="text-xs text-on-surface-variant" data-bind="search.timestamp">Yesterday</p>
+                        </div>
+                    </div>
+                    <button data-event="click:loadSearch" class="text-primary hover:text-primary/80 transition-colors">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <!-- @END_MAP )) -->
+            </div>
+        </div>
+        <!-- @END_COMPONENT: RecentSearches -->
+    </main>
+
+    <!-- @COMPONENT: BottomNavigation [mobile navigation] -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-surface-variant">
+        <div class="max-w-md mx-auto px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button data-event="click:goHome" class="flex flex-col items-center py-2 text-primary">
+                    <i class="fas fa-home text-lg mb-1"></i>
+                    <span class="text-xs font-medium">Home</span>
+                </button>
+                <button data-event="click:goToCards" class="flex flex-col items-center py-2 text-on-surface-variant hover:text-primary transition-colors">
+                    <i class="fas fa-credit-card text-lg mb-1"></i>
+                    <span class="text-xs">My Cards</span>
+                </button>
+                <button data-event="click:goToHistory" class="flex flex-col items-center py-2 text-on-surface-variant hover:text-primary transition-colors">
+                    <i class="fas fa-history text-lg mb-1"></i>
+                    <span class="text-xs">History</span>
+                </button>
+                <button data-event="click:goToSettings" class="flex flex-col items-center py-2 text-on-surface-variant hover:text-primary transition-colors">
+                    <i class="fas fa-cog text-lg mb-1"></i>
+                    <span class="text-xs">Settings</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: BottomNavigation -->
+
+    <!-- @COMPONENT: LoadingOverlay [conditional display] -->
+    <div class="hidden fixed inset-0 bg-black/20 flex items-center justify-center z-50" data-component="LoadingOverlay">
+        <div class="bg-white rounded-xl p-6 shadow-xl">
+            <div class="flex items-center gap-3">
+                <div class="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent"></div>
+                <span class="text-on-surface">Finding best cards...</span>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: LoadingOverlay -->
+
+    <script>
+        // TODO: Implement business logic, API calls, and state management
+        (function() {
+            'use strict';
+            
+            // Mock location detection
+            function detectLocation() {
+                console.log('Detecting location...');
+                // TODO: Implement geolocation API integration
+            }
+            
+            // Mock store search
+            function handleStoreSearch(query) {
+                console.log('Searching for:', query);
+                // TODO: Implement store search with debouncing
+            }
+            
+            // Mock filter toggle
+            function toggleFilters() {
+                const filterPanel = document.querySelector('[data-component="FilterPanel"]');
+                filterPanel.classList.toggle('hidden');
+            }
+            
+            // Mock card details view
+            function viewCardDetails(cardId) {
+                console.log('Viewing details for card:', cardId);
+                // TODO: Implement modal or navigation to card details
+            }
+            
+            // Error handling for location services
+            function handleLocationError() {
+                console.log('Location access denied or failed');
+                // TODO: Show fallback UI for manual location entry
+            }
+            
+            // Initialize app
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('CashBack Finder app initialized');
+                // TODO: Load user preferences, recent searches, and saved cards
+            });
+        })();
+    </script>
+</body>
+</html>

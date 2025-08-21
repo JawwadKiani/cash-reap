@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 5, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/jawwa/OneDrive/Desktop/Documents/My-Projects/CashReap/CashReap-1/cashreap/src/app/page.tsx"],"sourcesContent":["import { useState } from 'react';\nimport { CardComparison } from '@/components/card-comparison';\n\nexport default function Home() {\n  const [cards, setCards] = useState(/* initial cards or [] */);\n\n  const handleCardRemove = (cardId: string) => {\n    setCards(prev => prev.filter(card => card.id !== cardId));\n  };\n\n  const handleCardAdd = () => {\n    // your logic to add cards, e.g., open modal or add a default card\n  };\n\n  return (\n    <main className=\"p-8 min-h-screen bg-background\">\n      <CardComparison\n        selectedCards={cards}\n        onCardRemove={handleCardRemove}\n        onCardAdd={handleCardAdd}\n      />\n    </main>\n  );\n}\n"],"names":[],"mappings":";;;;AAAA;;;;;;;;;AAGe,SAAS;IACtB,MAAM,CAAC,OAAO,SAAS,GAAG,CAAA,GAAA,qMAAA,CAAA,WAAQ,AAAD;IAEjC,MAAM,mBAAmB,CAAC;QACxB,SAAS,CAAA,OAAQ,KAAK,MAAM,CAAC,CAAA,OAAQ,KAAK,EAAE,KAAK;IACnD;IAEA,MAAM,gBAAgB;IACpB,kEAAkE;IACpE;IAEA,qBACE,8OAAC;QAAK,WAAU;kBACd,cAAA,8OAAC;YACC,eAAe;YACf,cAAc;YACd,WAAW;;;;;;;;;;;AAInB","debugId":null}}]
+}
