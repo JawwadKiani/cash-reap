@@ -68,7 +68,7 @@ export function CardRecommendation({
   const badge = getIssuerBadge(card.issuer);
 
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm border border-surface-variant">
+    <div className="bg-white rounded-xl p-4 shadow-sm border border-surface-variant focus:outline-none focus:ring-2 focus:ring-primary" tabIndex={0} aria-label={card.name}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-3">
           <div className={`w-10 h-6 ${badge.color} rounded flex items-center justify-center`}>

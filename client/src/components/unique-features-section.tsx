@@ -44,26 +44,24 @@ export function UniqueFeaturesSection() {
       </div>
       
       <div className="grid md:grid-cols-2 gap-4">
-        {features.map((feature, index) => (
-          <Card key={index} className={`${feature.color} border-2`}>
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  {feature.icon}
-                  <CardTitle className="text-lg">{feature.title}</CardTitle>
-                </div>
-                <Badge variant="secondary" className="text-xs">
-                  {feature.badge}
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                {feature.description}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
+            {features.map((feature, index) => (
+              <Card key={index} className={`${feature.color} border-2 focus:outline-none focus:ring-2 focus:ring-primary`} tabIndex={0} aria-label={feature.title}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      {feature.icon}
+                      <CardTitle className="text-lg">{feature.title}</CardTitle>
+                    </div>
+                    <Badge variant={feature.badge === "Ahead of Trends" ? "outline" : "default"}>
+                      {feature.badge}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-sm text-muted-foreground">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
       </div>
       
       <div className="text-center p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200">

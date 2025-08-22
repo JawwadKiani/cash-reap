@@ -84,11 +84,11 @@ export function FeatureNavigation() {
         {features.map((feature) => {
           const Icon = feature.icon;
           return (
-            <Link key={feature.href} href={feature.href}>
-              <Card className="hover:shadow-lg transition-all duration-200 cursor-pointer group h-full">
+            <Link key={feature.href} href={feature.href} aria-label={feature.title}>
+              <Card className="hover:shadow-lg transition-all duration-200 cursor-pointer group h-full focus:outline-none focus:ring-2 focus:ring-primary" tabIndex={0}>
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
-                    <div className={`p-2 rounded-lg ${feature.bgColor}`}>
+                    <div className={`p-2 rounded-lg ${feature.bgColor}`}> 
                       <Icon className={`h-6 w-6 ${feature.color}`} />
                     </div>
                     <Badge variant="secondary" className="text-xs">

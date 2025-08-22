@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { isCardSaved } from "@/lib/cardUtils";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Plus, Trash2, TrendingUp, Calendar, Gift, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -120,9 +121,7 @@ export function EnhancedMyCards({ className }: EnhancedMyCardsProps) {
     saveCardMutation.mutate(cardId);
   };
 
-  const isCardSaved = (cardId: string) => {
-    return Array.isArray(savedCards) && savedCards.some((saved: any) => saved.card.id === cardId);
-  };
+  // ...existing code...
 
   // Enhance saved cards with additional data
   const enhancedCards = (savedCards || []).map(enhanceCardData);

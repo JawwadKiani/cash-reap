@@ -89,7 +89,7 @@ export default function WelcomeBonusTracker() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleBonusSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTracker.cardId || !newTracker.requiredSpending) return;
 
@@ -154,7 +154,7 @@ export default function WelcomeBonusTracker() {
             <CardDescription>Add a credit card welcome bonus to track your spending progress</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleBonusSubmit} className="space-y-4">
               <div>
                 <Label htmlFor="cardId">Credit Card</Label>
                 <Select value={newTracker.cardId} onValueChange={(value) => setNewTracker({ ...newTracker, cardId: value })}>

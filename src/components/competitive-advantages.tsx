@@ -57,7 +57,7 @@ export function CompetitiveAdvantages() {
   );
 
   return (
-    <Card className="max-w-4xl mx-auto">
+  <Card className="max-w-4xl mx-auto focus:outline-none focus:ring-2 focus:ring-primary" tabIndex={0} aria-label="Competitive Advantages Table">
       <CardHeader>
         <CardTitle>Competitive Advantages</CardTitle>
       </CardHeader>

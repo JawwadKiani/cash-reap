@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { handleSaveToggle } from "@/lib/cardUtils";
 import { useAuth } from "@/hooks/useAuth";
 import type { CreditCard } from "@shared/schema";
 
@@ -70,13 +71,7 @@ export default function CardDetails() {
     },
   });
 
-  const handleSaveToggle = () => {
-    if (isCardSaved) {
-      unsaveCardMutation.mutate();
-    } else {
-      saveCardMutation.mutate();
-    }
-  };
+  // ...existing code...
 
   if (isLoading) {
     return (
@@ -206,7 +201,11 @@ export default function CardDetails() {
               <Button 
                 variant="outline" 
                 className="w-full"
-                onClick={handleSaveToggle}
+                onClick={() => handleSaveToggle({
+                  isSaved: isCardSaved,
+                  saveFn: saveCardMutation.mutate,
+                  unsaveFn: unsaveCardMutation.mutate
+                })}
                 disabled={saveCardMutation.isPending || unsaveCardMutation.isPending}
               >
                 <Heart className={`w-4 h-4 mr-2 ${isCardSaved ? 'fill-current text-red-500' : ''}`} />

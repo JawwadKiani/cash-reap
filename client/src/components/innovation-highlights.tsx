@@ -47,7 +47,7 @@ export function InnovationHighlights() {
       
       <div className="grid md:grid-cols-2 gap-6">
         {innovations.map((item, index) => (
-          <Card key={index} className="hover:shadow-lg transition-all duration-300 border-2">
+            <Card key={index} className="border-2 border-muted bg-white dark:bg-gray-900 shadow-sm hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary" tabIndex={0} aria-label={item.title}>
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">

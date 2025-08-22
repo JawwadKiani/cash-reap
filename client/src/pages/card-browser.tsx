@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { isCardSaved, handleSaveToggle } from "@/lib/cardUtils";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation as useWouterLocation } from "wouter";
 import { Search, Filter, ArrowLeft, Plus, Minus } from "lucide-react";
@@ -67,9 +68,7 @@ export default function CardBrowser() {
   };
 
   // Check if card is saved
-  const isCardSaved = (cardId: string) => {
-    return savedCards.some((saved: any) => saved.cardId === cardId);
-  };
+  // ...existing code...
 
   // Save card mutation
   const saveCardMutation = useMutation({
@@ -113,14 +112,7 @@ export default function CardBrowser() {
     },
   });
 
-  const handleSaveToggle = (e: React.MouseEvent, cardId: string) => {
-    e.stopPropagation(); // Prevent card click navigation
-    if (isCardSaved(cardId)) {
-      unsaveCardMutation.mutate(cardId);
-    } else {
-      saveCardMutation.mutate(cardId);
-    }
-  };
+  // ...existing code...
 
   return (
     <div className="min-h-screen bg-surface">
@@ -221,24 +213,20 @@ export default function CardBrowser() {
                         </div>
                       </div>
                       <Button
+                        variant="outline"
                         size="sm"
-                        variant={isCardSaved(card.id) ? "destructive" : "default"}
-                        className="w-8 h-8 p-0 shrink-0"
-                        onClick={(e) => handleSaveToggle(e, card.id)}
+                        onClick={(e) => handleSaveToggle({
+                          isSaved: isCardSaved(card.id),
+                          saveFn: saveCardMutation.mutate,
+                          unsaveFn: unsaveCardMutation.mutate,
+                          cardId: card.id,
+                          event: e
+                        })}
+                        className="ml-2"
                         disabled={saveCardMutation.isPending || unsaveCardMutation.isPending}
                       >
-                        {isCardSaved(card.id) ? (
-                          <Minus className="w-4 h-4" />
-                        ) : (
-                          <Plus className="w-4 h-4" />
-                        )}
+                        {isCardSaved(card.id) ? <Minus className="w-4 h-4 text-red-500" /> : <Plus className="w-4 h-4 text-green-600" />}
                       </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="flex items-center justify-between">
-                    <div className="flex gap-2">
                       {card.annualFee === 0 && (
                         <Badge variant="secondary" className="text-xs">
                           No Annual Fee
@@ -254,6 +242,9 @@ export default function CardBrowser() {
                       Tap for details
                     </div>
                   </div>
+                </CardHeader>
+                <CardContent>
+                  {/* Additional card details can go here */}
                 </CardContent>
               </Card>
             ))

@@ -209,7 +209,7 @@ export function CardComparison({
           selectedCards.length === 3 ? "grid-cols-3" : "grid-cols-1"
         }`}>
           {selectedCards.map((card) => (
-            <Card key={card.id} className="relative">
+        <Card key={card.id} className="relative focus:outline-none focus:ring-2 focus:ring-primary" tabIndex={0} aria-label={card.name}>
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">

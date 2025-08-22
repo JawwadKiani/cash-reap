@@ -18,7 +18,7 @@ export function TopNavigation() {
       <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
         {/* Logo and Brand */}
         <div className="flex items-center gap-4">
-          <img src="/src/assets/logo-transparent.svg" alt="CashReap Logo" className="h-24 w-24 drop-shadow-xl" />
+        <img src="/src/assets/logo-transparent.svg" alt="CashReap Logo" className="h-24 w-24 drop-shadow-xl" aria-label="CashReap Logo" />
           <span className="font-extrabold text-2xl tracking-tight flex gap-1">
             <span className="text-yellow-500">Cash</span>
             <span className="text-green-600">Reap</span>
@@ -30,9 +30,10 @@ export function TopNavigation() {
           {navItems.map(({ path, label }) => {
             const isActive = location === path;
             return (
-              <Link key={path} href={path}>
+          <Link key={path} href={path} aria-label={label}>
                 <span
                   className={`font-medium text-lg px-2 py-1 rounded transition-colors duration-150 cursor-pointer ${isActive ? "bg-primary text-white shadow" : "text-on-surface hover:bg-primary/10 hover:text-primary"}`}
+            className={`font-medium text-lg px-2 py-1 rounded transition-colors duration-150 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary ${isActive ? "bg-primary text-white shadow" : "text-on-surface hover:bg-primary/10 hover:text-primary"}`}
                 >
                   {label}
                 </span>

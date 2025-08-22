@@ -77,7 +77,7 @@ export default function PurchasePlanner() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handlePurchaseSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPlan.title || !newPlan.amount) return;
 
@@ -111,7 +111,7 @@ export default function PurchasePlanner() {
             <CardDescription>Plan your upcoming purchase to get the best rewards</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handlePurchaseSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="title">Purchase Title</Label>

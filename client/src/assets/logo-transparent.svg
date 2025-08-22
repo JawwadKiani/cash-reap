@@ -41,5 +41,5 @@
   <text x="220" y="154" font-family="Arial, sans-serif" font-size="8" font-weight="bold" text-anchor="middle" fill="#fff">$</text>
   
   <!-- Text -->
-  
+  <text x="200" y="320" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="#1F2937">CASH REAP</text>
 </svg>
