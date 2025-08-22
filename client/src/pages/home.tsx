@@ -79,6 +79,9 @@ export default function Home() {
   const saveMutation = useMutation({
     mutationFn: async (cardId: string) => {
       if (!userId) throw new Error("User not authenticated");
+          <div style={{background: 'linear-gradient(90deg, #ff8a00, #e52e71)', color: 'white', padding: '2rem', textAlign: 'center', fontSize: '2rem', fontWeight: 'bold', marginBottom: '2rem', borderRadius: '1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.15)'}}>
+            🚀 THIS IS THE NEW HOMEPAGE! 🚀
+          </div>
       const response = await fetch("/api/saved-cards", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -16,7 +16,7 @@ import CardBrowser from "@/pages/card-browser";
 import PurchasePlanner from "@/pages/purchase-planner";
 import RewardCalculator from "@/pages/reward-calculator";
 import WelcomeBonusTracker from "@/pages/welcome-bonus-tracker";
-import CardComparison from "@/pages/card-comparison";
+import CardComparison from "@/components/card-comparison";
 import SpendingAnalyticsPage from "@/pages/spending-analytics";
 import InsightsDashboard from "@/pages/insights-dashboard";
 import AIRecommendations from "@/pages/ai-recommendations";
