@@ -59,7 +59,7 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  const port = parseInt(process.env.PORT || '3001', 10);
+  const port = parseInt(process.env.PORT || '3010', 10);
   const server = app.listen(port, 'localhost', () => {
     log(`serving on http://localhost:${port}`);
   });
