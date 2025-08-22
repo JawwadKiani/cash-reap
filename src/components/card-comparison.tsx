@@ -1,3 +1,25 @@
+  const [loading, setLoading] = useState(false);
+
+  // Simulate loading for demonstration (replace with real loading logic)
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="space-y-8 bg-white rounded-xl shadow-lg p-8 border border-surface-variant animate-pulse">
+        <div className="h-8 bg-muted rounded w-1/3 mb-4" />
+        <div className="grid grid-cols-3 gap-6">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-32 bg-muted rounded" />
+          ))}
+        </div>
+        <div className="h-6 bg-muted rounded w-1/2 mt-8" />
+      </div>
+    );
+  }
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -143,7 +165,7 @@ export function CardComparison({
 
   if (selectedCards.length === 0) {
     return (
-      <Card className={`${className}`}>
+      <Card className={`bg-white border border-surface-variant shadow-lg rounded-xl ${className}`}>
         <CardContent className="p-8 text-center">
           <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
             <CreditCard className="w-8 h-8 text-muted-foreground" />
@@ -162,7 +184,7 @@ export function CardComparison({
   }
 
   return (
-    <div className={`space-y-4 ${className}`}>
+  <div className={`space-y-8 bg-white rounded-xl shadow-lg p-8 border border-surface-variant ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

@@ -59,38 +59,33 @@ export function CompetitiveAdvantages() {
   return (
     <Card className="max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-center">How CashReap Stands Out</CardTitle>
-        <p className="text-center text-sm text-muted-foreground">
-          Feature comparison vs. leading competitors
-        </p>
+        <CardTitle>Competitive Advantages</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="min-w-full border border-gray-200 rounded-lg">
             <thead>
-              <tr className="border-b">
-                <th className="text-left py-2 px-2">Feature</th>
-                <th className="text-center py-2 px-2">
-                  <div className="font-bold text-primary">CashReap</div>
-                </th>
-                <th className="text-center py-2 px-2">
-                  <div className="text-sm">MaxRewards</div>
-                </th>
-                <th className="text-center py-2 px-2">
-                  <div className="text-sm">CardPointers</div>
-                </th>
+              <tr>
+                <th className="py-2 px-2 text-left">Feature</th>
+                <th className="py-2 px-2 text-center">CashReap</th>
+                <th className="py-2 px-2 text-center">MaxRewards</th>
+                <th className="py-2 px-2 text-center">CardPointers</th>
               </tr>
             </thead>
             <tbody>
-              {comparison.map((item, index) => (
-                <tr key={index} className="border-b">
+              {comparison.map((item, idx) => (
+                <tr key={idx} className="border-t">
                   <td className="py-3 px-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium">{item.feature}</span>
-                      {item.importance === "high" && (
-                        <Badge variant="destructive" className="text-xs">Key</Badge>
-                      )}
-                    </div>
+                    <span className="font-medium">{item.feature}</span>
+                    {item.importance === "high" && (
+                      <Badge className="ml-2" variant="default">High</Badge>
+                    )}
+                    {item.importance === "medium" && (
+                      <Badge className="ml-2" variant="secondary">Medium</Badge>
+                    )}
+                    {item.importance === "low" && (
+                      <Badge className="ml-2" variant="outline">Low</Badge>
+                    )}
                   </td>
                   <td className="text-center py-3 px-2">
                     <CheckIcon has={item.cashreap} />
@@ -106,7 +101,6 @@ export function CompetitiveAdvantages() {
             </tbody>
           </table>
         </div>
-        
         <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
           <p className="text-sm text-green-800">
             <strong>CashReap's Key Advantage:</strong> We respect your privacy and let you try our recommendations instantly without requiring bank access or immediate signup.

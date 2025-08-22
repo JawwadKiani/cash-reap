@@ -35,24 +35,23 @@ export function UniqueFeaturesSection() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="text-center">
-        <h3 className="text-2xl font-bold text-on-surface mb-2">Why Choose CashReap?</h3>
-        <p className="text-muted-foreground">
-          Built different from other credit card apps - focused on what matters most
+        <h3 className="text-3xl font-extrabold text-green-700 mb-2 animate-fade-in">Why Choose CashReap?</h3>
+        <p className="text-muted-foreground text-lg animate-fade-in delay-100">
+          Built different from other credit card apps—focused on what matters most.
         </p>
       </div>
-      
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 gap-6">
         {features.map((feature, index) => (
-          <Card key={index} className={`${feature.color} border-2`}>
+          <Card key={index} className={`bg-white border-2 border-surface-variant shadow-md transition-transform duration-300 hover:scale-105 ${feature.color}`} style={{animation: `fadeIn 0.6s ease ${index * 0.1}s both`}}>
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   {feature.icon}
-                  <CardTitle className="text-lg">{feature.title}</CardTitle>
+                  <CardTitle className="text-lg font-semibold">{feature.title}</CardTitle>
                 </div>
-                <Badge variant="secondary" className="text-xs">
+                <Badge variant="secondary" className="text-xs font-medium">
                   {feature.badge}
                 </Badge>
               </div>
@@ -65,12 +64,17 @@ export function UniqueFeaturesSection() {
           </Card>
         ))}
       </div>
-      
-      <div className="text-center p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200">
-        <p className="text-sm text-amber-800">
-          <strong>🌾 Harvest Your Rewards</strong> - The only app with an agricultural theme that makes earning cash back feel like reaping what you sow
+      <div className="text-center p-6 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200 shadow animate-fade-in delay-200">
+        <p className="text-lg text-amber-800 font-semibold">
+          <strong>🌾 Harvest Your Rewards</strong> — The only app with an agricultural theme that makes earning cash back feel like reaping what you sow.
         </p>
       </div>
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+        .animate-fade-in { animation: fadeIn 0.7s ease both; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+      `}</style>
     </div>
   );
 }

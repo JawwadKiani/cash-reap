@@ -22,4 +22,14 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button, .card, .hover\:shadow-lg, .transition-all {
+  transition: box-shadow 0.2s, transform 0.2s, background 0.2s, color 0.2s;
+}
+
+.card:hover, .hover\:shadow-lg:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 1.5px 4px rgba(0,0,0,0.08);
+  transform: translateY(-2px) scale(1.02);
 }

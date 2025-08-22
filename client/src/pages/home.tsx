@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { CardRecommendation } from "@/components/card-recommendation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
@@ -62,10 +63,17 @@ export default function Home() {
     enabled: !!userId,
   });
 
-  // Get recommendations for selected store
-  const { data: recommendations = [], isLoading: isLoadingRecommendations } = useQuery<CreditCard[]>({
-    queryKey: ["/api/recommendations", selectedStore?.id],
+
+  // Get best card recommendations for selected store/category
+  const { data: recommendations = [], isLoading: isLoadingRecommendations } = useQuery({
+    queryKey: ["/api/best-card-recommendations", selectedStore?.categoryId],
     enabled: !!selectedStore,
+    queryFn: async () => {
+      if (!selectedStore) return [];
+      const res = await fetch(`/api/best-card-recommendations?categoryId=${selectedStore.categoryId}`);
+      if (!res.ok) throw new Error("Failed to fetch recommendations");
+      return res.json();
+    },
   });
 
   const saveMutation = useMutation({
@@ -152,44 +160,16 @@ export default function Home() {
                   ))}
                 </div>
               ) : (
-                recommendations.slice(0, 3).map((card) => {
-                  const isSaved = savedCards.some(saved => saved.cardId === card.id);
-                  return (
-                    <Card key={card.id} className="p-4">
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h4 className="font-semibold text-on-surface">{card.name}</h4>
-                          <p className="text-sm text-on-surface-variant">{card.issuer}</p>
-                        </div>
-                        <Button
-                          variant={isSaved ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => !isSaved && saveMutation.mutate(card.id)}
-                          disabled={isSaved || saveMutation.isPending}
-                        >
-                          {isSaved ? (
-                            <Heart className="w-4 h-4 fill-current" />
-                          ) : (
-                            <Heart className="w-4 h-4" />
-                          )}
-                        </Button>
-                      </div>
-                      <div className="flex items-center gap-4 text-sm">
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-yellow-500" />
-                          <span className="font-medium">{card.baseRewardRate}%</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <DollarSign className="w-4 h-4 text-green-600" />
-                          <span>${card.annualFee}</span>
-                        </div>
-                      </div>
-                      {card.welcomeBonus && (
-                        <p className="text-xs text-primary mt-2">{card.welcomeBonus}</p>
-                      )}
-                    </Card>
-                  );
-                })
+                recommendations.slice(0, 3).map((card) => (
+                  <CardRecommendation
+                    key={card.id}
+                    card={card}
+                    rewardRate={card.rewardRate}
+                    categoryMatch={selectedStore?.name}
+                    onViewDetails={() => {}}
+                    isSaved={savedCards.some(saved => saved.cardId === card.id)}
+                  />
+                ))
               )}
             </div>
           </div>
